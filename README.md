@@ -479,12 +479,25 @@ curl -X POST http://localhost:8000/query \
 
 ## Evaluation System 🎯
 
-The project includes a comprehensive manual evaluation system for assessing answer quality with citations.
+The project includes a comprehensive manual evaluation system for assessing answer quality with citations **based on actual document content**.
+
+### Sample Documents
+
+Three test documents are included in `sample_docs/`:
+- **SmartHome_Manual.txt** - Smart home system manual (10 questions)
+- **Invoice_FV_2025_0847.txt** - VAT invoice for IT equipment (10 questions)
+- **Contract_SVC_0089.txt** - IT project contract (10 questions)
 
 ### Quick Start
 
 ```bash
-# 1. Run evaluation (queries all 30 questions)
+# 0. Load sample documents (REQUIRED!)
+for file in sample_docs/*.txt; do
+  curl -X POST http://localhost:8000/documents -F "file=@$file"
+  sleep 5
+done
+
+# 1. Run evaluation (queries all 30 questions about document content)
 python eval/run_evaluation.py
 
 # 2. Manually score results (edit eval/evaluation_results.json)
@@ -494,24 +507,34 @@ python eval/run_evaluation.py
 python eval/analyze_results.py
 ```
 
+### Question Mix (30 total)
+
+- **24 answerable** - Answer is in document, can cite specific location
+- **4 multi-hop** - Requires combining info from 2+ chunks
+- **2 unanswerable** - No answer in document (tests hallucination resistance)
+
 ### Scoring System
 
-Each question is scored in 3 categories (0-2 points each):
+Each question is scored in 3 categories (0-2 points each), **based on document content**:
 
-1. **Correctness** (0-2): Is the answer accurate?
-   - 0 = Incorrect/hallucination
+1. **Correctness** (0-2): Is the answer accurate **according to the document**?
+   - 0 = Incorrect/hallucination (info not in document)
    - 1 = Partially correct
-   - 2 = Correct
+   - 2 = Correct and grounded in document
 
 2. **Grounding/Citations** (0-2): Are citations accurate and relevant?
    - 0 = No citations or irrelevant
    - 1 = Weak citations
-   - 2 = Strong, supporting citations
+   - 2 = Strong, supporting citations from correct document sections
 
-3. **Completeness** (0-2): Does it cover all key points?
+3. **Completeness** (0-2): Does it cover all key points **from the document**?
    - 0 = Missing key elements
    - 1 = Mostly complete
    - 2 = Fully complete
+
+**Special rule for "unanswerable" questions:**
+- correctness = 2 only if model clearly states "No information in documents" (without making things up)
+- Tests hallucination resistance
 
 **Maximum Score**: 
 - Per question: 6 points

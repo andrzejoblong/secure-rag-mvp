@@ -1,17 +1,55 @@
 # System Ewaluacji RAG z Cytowaniami
 
-System do manualnej oceny jakości odpowiedzi RAG z cytowaniami.
+System do manualnej oceny jakości odpowiedzi RAG z cytowaniami **oparty o rzeczywistą treść dokumentów**.
 
 ## 📋 Struktura
 
 ```
 eval/
-├── questions.jsonl           # 30 pytań testowych
+├── questions.jsonl           # 30 pytań testowych o TREŚĆ dokumentów
+├── questions_meta.jsonl      # Backup: pytania meta o system (nieużywane)
 ├── scoring.py               # System scoringu i modele Pydantic
 ├── run_evaluation.py        # Uruchomienie ewaluacji (zapytania API)
 ├── analyze_results.py       # Analiza wyników
 └── evaluation_results.json  # Wyniki (generowane)
+
+sample_docs/
+├── SmartHome_Manual.txt     # Instrukcja obsługi (10 pytań)
+├── Invoice_FV_2025_0847.txt # Faktura VAT (10 pytań)
+├── Contract_SVC_0089.txt    # Umowa zlecenia (10 pytań)
+└── SETUP.md                 # Instrukcje załadowania dokumentów
 ```
+
+## 🎯 Koncepcja Ewaluacji
+
+### ⚠️ WAŻNE: Pytania o TREŚĆ dokumentów, nie o system!
+
+Ewaluacja RAG testuje czy:
+1. ✅ System **znajduje właściwe fragmenty** w dokumentach (retrieval)
+2. ✅ Odpowiedź jest **uziemiona w treści** (grounded)
+3. ✅ Cytowania wskazują **konkretne miejsca** (document_id, page, chunk_id, quote)
+4. ✅ Model **nie halucynuje** gdy brak odpowiedzi w dokumencie
+
+### 📚 Sample Documents
+
+System zawiera 3 przykładowe dokumenty:
+
+**1. SmartHome_Manual.txt** (10 pytań: 7 answerable + 2 multi-hop + 1 unanswerable)
+- Instrukcja obsługi systemu automatyki domowej
+- Pytania o: wymagania, instalację, konfigurację, tryby pracy, troubleshooting
+
+**2. Invoice_FV_2025_0847.txt** (10 pytań: 8 answerable + 1 multi-hop + 1 unanswerable)
+- Faktura VAT za sprzęt IT
+- Pytania o: numery, kwoty, terminy, pozycje, usługi, gwarancję
+
+**3. Contract_SVC_0089.txt** (10 pytań: 7 answerable + 2 multi-hop + 1 unanswerable)
+- Umowa zlecenia na projekt IT
+- Pytania o: wynagrodzenie, terminy, milestone'y, kary umowne, gwarancję
+
+### 📊 Mix pytań (30 total):
+- **24 answerable** - odpowiedź jest w PDF, da się wskazać stronę i cytat
+- **4 multi-hop** - odpowiedź wymaga 2+ fragmentów z różnych miejsc
+- **2 unanswerable** - kontrola negatywna, brak odpowiedzi w dokumencie
 
 ## 🎯 System Scoringu
 
@@ -38,14 +76,38 @@ Każde pytanie oceniane jest w 3 kategoriach (0-2 punkty każda):
 
 ## 🚀 Użycie
 
-### Krok 1: Przygotowanie
+### ⚠️ Krok 0: Załaduj Sample Documents (WYMAGANE!)
+
+Przed uruchomieniem ewaluacji **musisz** załadować 3 sample dokumenty:
+
+```bash
+# Przejdź do instrukcji
+cat sample_docs/SETUP.md
+
+# Szybkie załadowanie wszystkich
+for file in sample_docs/*.txt; do
+  echo "Uploading $file..."
+  curl -X POST http://localhost:8000/documents -F "file=@$file"
+  sleep 5
+done
+
+# Weryfikacja
+curl http://localhost:8000/documents
+```
+
+Zobacz szczegóły w `sample_docs/SETUP.md`.
+
+### Krok 1: Uruchomienie Ewaluacji
+
+### Krok 1: Uruchomienie Ewaluacji
 
 Upewnij się, że:
-1. API działa (`http://localhost:8000`)
-2. Dokumenty są załadowane i przetworzone
-3. Endpoint `/answer` jest dostępny
+1. ✅ API działa (`http://localhost:8000`)
+2. ✅ **3 sample dokumenty są załadowane** (zobacz Krok 0)
+3. ✅ Embeddingi zostały wygenerowane (sprawdź `GET /documents/{id}`)
+4. ✅ Endpoint `/answer` jest dostępny
 
-### Krok 2: Uruchomienie Ewaluacji
+### Krok 2: Uruchom zapytania
 
 ```bash
 # Uruchom zapytania dla wszystkich 30 pytań
@@ -129,16 +191,34 @@ Completeness:
 
 ## 📝 Format Pytań (questions.jsonl)
 
-Każda linia w `questions.jsonl` to JSON z pytaniem:
+Każda linia w `questions.jsonl` to JSON z pytaniem **o treść dokumentu**:
 
 ```json
 {
   "id": "q01",
-  "question": "Jaki jest cel projektu?",
-  "expected": "Oczekiwana odpowiedź lub kluczowe elementy",
-  "must_cite": true
+  "question": "Jaki jest numer faktury?",
+  "expected": "FV/2025/01/0847",
+  "must_cite": true,
+  "category": "answerable",
+  "document": "invoice"
 }
 ```
+
+### Kategorie pytań:
+
+- **answerable** (24 pytania) - odpowiedź jest w dokumencie, można podać cytat
+- **multi-hop** (4 pytania) - wymaga zebrania info z 2+ chunków
+- **unanswerable** (2 pytania) - brak odpowiedzi, test czy model nie halucynuje
+
+### Scorowanie dla pytań unanswerable:
+
+Dla pytań typu "unanswerable" (gdy **brak odpowiedzi w dokumencie**):
+
+- **correctness = 2** tylko gdy model jasno mówi "Brak informacji w dokumentach" (bez zmyślania)
+- **grounding = 2** gdy cytuje fragment "nie dotyczy" LUB poprawnie `citations=[]`
+- **correctness = 0** jeśli model zmyśla odpowiedź z wiedzy ogólnej
+
+To testuje czy RAG umie odmówić zamiast halucynować!
 
 ## 🔍 Co Oceniamy?
 

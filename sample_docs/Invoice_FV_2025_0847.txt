@@ -1,0 +1,166 @@
+FAKTURA VAT / INVOICE
+Nr / No: FV/2025/01/0847
+
+═══════════════════════════════════════════════════════════
+
+SPRZEDAWCA / SELLER:
+TechStore Electronics Sp. z o.o.
+ul. Handlowa 15
+00-001 Warszawa
+NIP: 5272839405
+REGON: 384729501
+
+Tel: +48 22 555 0100
+Email: faktury@techstore.pl
+www.techstore.pl
+
+───────────────────────────────────────────────────────────
+
+NABYWCA / BUYER:
+Innovation Labs Sp. z o.o.
+al. Technologiczna 88
+02-677 Warszawa
+NIP: 5213698274
+REGON: 147852369
+
+───────────────────────────────────────────────────────────
+
+DATA WYSTAWIENIA / ISSUE DATE: 15.01.2025
+DATA SPRZEDAŻY / SALE DATE: 15.01.2025
+TERMIN PŁATNOŚCI / PAYMENT DUE: 29.01.2025 (14 dni)
+FORMA PŁATNOŚCI / PAYMENT METHOD: Przelew bankowy / Bank transfer
+
+NUMER ZAMÓWIENIA / ORDER NUMBER: PO-2025-0123
+NUMER DOSTAWY / DELIVERY NOTE: WZ-2025-0456
+
+═══════════════════════════════════════════════════════════
+
+LP | NAZWA TOWARU/USŁUGI           | J.M. | ILOŚĆ | CENA JEDN. | WARTOŚĆ  | VAT  | WARTOŚĆ BRUTTO
+   | ITEM DESCRIPTION                | UNIT | QTY   | UNIT PRICE | NET      | %    | GROSS
+───────────────────────────────────────────────────────────────────────────────────────────────────
+
+1  | Laptop Dell Latitude 7430      | szt. |   5   | 4 200,00   | 21 000,00| 23%  | 25 830,00
+   | 14" FHD, i7-1265U, 16GB RAM,   |      |       |            |          |      |
+   | 512GB SSD, Windows 11 Pro      |      |       |            |          |      |
+   | S/N: DL743001-DL743005         |      |       |            |          |      |
+
+2  | Monitor Dell UltraSharp U2723DE| szt. |  10   | 1 850,00   | 18 500,00| 23%  | 22 755,00
+   | 27" QHD, USB-C, IPS            |      |       |            |          |      |
+   | S/N: MU272301-MU272310         |      |       |            |          |      |
+
+3  | Stacja dokująca Dell WD19TBS   | szt. |   5   |   620,00   |  3 100,00| 23%  |  3 813,00
+   | Thunderbolt 3, 180W            |      |       |            |          |      |
+   | S/N: WD19T001-WD19T005         |      |       |            |          |      |
+
+4  | Klawiatura Logitech MX Keys    | szt. |   8   |   450,00   |  3 600,00| 23%  |  4 428,00
+   | Wireless, podświetlana         |      |       |            |          |      |
+   | S/N: MXK001-MXK008             |      |       |            |          |      |
+
+5  | Mysz Logitech MX Master 3S     | szt. |   8   |   380,00   |  3 040,00| 23%  |  3 739,20
+   | Wireless, ergonomiczna         |      |       |            |          |      |
+   | S/N: MXM001-MXM008             |      |       |            |          |      |
+
+6  | Słuchawki Jabra Evolve2 75     | szt. |   5   |   890,00   |  4 450,00| 23%  |  5 473,50
+   | ANC, USB-C, Microsoft Teams    |      |       |            |          |      |
+   | S/N: JE275001-JE275005         |      |       |            |          |      |
+
+7  | Kamera internetowa Logitech    | szt. |   3   | 1 150,00   |  3 450,00| 23%  |  4 243,50
+   | Brio 4K, HDR, autofocus        |      |       |            |          |      |
+   | S/N: BR4K001-BR4K003           |      |       |            |          |      |
+
+8  | Usługa: Konfiguracja laptopów  | usł. |   1   | 1 200,00   |  1 200,00| 23%  |  1 476,00
+   | Instalacja systemu, aplikacji, |      |       |            |          |      |
+   | konfiguracja zabezpieczeń      |      |       |            |          |      |
+
+9  | Usługa: Dostawa i instalacja   | usł. |   1   |   450,00   |    450,00| 23%  |    553,50
+   | sprzętu w siedzibie klienta    |      |       |            |          |      |
+
+10 | Przedłużona gwarancja          | szt. |   5   |   280,00   |  1 400,00| 23%  |  1 722,00
+   | Dell ProSupport Plus 3 lata    |      |       |            |          |      |
+   | dla laptopów                   |      |       |            |          |      |
+
+═══════════════════════════════════════════════════════════
+
+RAZEM NETTO / TOTAL NET:                      60 190,00 PLN
+VAT 23%:                                      13 843,70 PLN
+───────────────────────────────────────────────────────────
+RAZEM BRUTTO / TOTAL GROSS:                   74 033,70 PLN
+
+Słownie brutto: Siedemdziesiąt cztery tysiące trzydzieści trzy złote 70/100
+In words: Seventy-four thousand thirty-three PLN 70/100
+
+═══════════════════════════════════════════════════════════
+
+PODSUMOWANIE VAT / VAT SUMMARY:
+
+Stawka VAT | Wartość netto | Kwota VAT  | Wartość brutto
+VAT rate   | Net value     | VAT amount | Gross value
+───────────────────────────────────────────────────────────
+23%        | 60 190,00 PLN | 13 843,70  | 74 033,70 PLN
+───────────────────────────────────────────────────────────
+RAZEM      | 60 190,00 PLN | 13 843,70  | 74 033,70 PLN
+
+═══════════════════════════════════════════════════════════
+
+DANE DO PRZELEWU / BANK DETAILS:
+
+Bank: PKO Bank Polski S.A.
+Nr konta / Account number:
+PL 86 1020 1026 0000 1502 0384 7294
+SWIFT: BPKOPLPW
+
+Tytuł przelewu / Payment reference:
+FV/2025/01/0847
+
+KWOTA DO ZAPŁATY / AMOUNT DUE: 74 033,70 PLN
+
+═══════════════════════════════════════════════════════════
+
+UWAGI / NOTES:
+
+1. Faktura wystawiona i wysłana elektronicznie zgodnie z Art. 106n 
+   ustawy o VAT.
+
+2. Towar pozostaje własnością sprzedawcy do momentu całkowitej zapłaty.
+
+3. Opóźnienie w płatności skutkuje naliczeniem odsetek ustawowych
+   (obecnie 13,5% rocznie).
+
+4. Gwarancja producenta zgodnie z warunkami na stronie producenta.
+   Dodatkowa gwarancja Dell ProSupport Plus aktywowana automatycznie
+   po zarejestrowaniu sprzętu.
+
+5. Reklamacje należy zgłaszać na: reklamacje@techstore.pl w ciągu
+   14 dni od daty dostawy.
+
+6. Sprzęt dostarczony firmą kurierską DHL w dniu 15.01.2025.
+   Numer przesyłki: 1234567890123
+
+7. Faktura oryginalna / Original invoice.
+
+═══════════════════════════════════════════════════════════
+
+PODPISY / SIGNATURES:
+
+Wystawił/Issued by:                    Zatwierdził/Approved by:
+Anna Kowalska                          Piotr Nowak
+Dział Sprzedaży                        Dyrektor Handlowy
+
+
+[PODPIS ELEKTRONICZNY]                 [PODPIS ELEKTRONICZNY]
+
+═══════════════════════════════════════════════════════════
+
+TechStore Electronics Sp. z o.o.
+Kapitał zakładowy: 500 000 PLN
+Sąd Rejonowy dla m.st. Warszawy, XII Wydział Gospodarczy KRS
+KRS: 0000584729
+Zarząd: Piotr Nowak (Prezes), Anna Kowalska (Wiceprezes)
+
+═══════════════════════════════════════════════════════════
+
+KONIEC FAKTURY / END OF INVOICE
+
+Data wydruku / Print date: 15.01.2025 14:32:15
+Wersja / Version: 1.0
+System: TechStore ERP v4.2.1

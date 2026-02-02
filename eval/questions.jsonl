@@ -1,30 +1,30 @@
-{"id":"q01","question":"Jaki jest cel projektu?","expected":"Projekt realizuje system RAG (Retrieval-Augmented Generation) z obsługą cytowań","must_cite":true}
-{"id":"q02","question":"Jakie są główne komponenty systemu?","expected":"FastAPI, PostgreSQL, pgvector, sentence-transformers","must_cite":true}
-{"id":"q03","question":"Jakie bazy danych są wykorzystywane?","expected":"PostgreSQL z rozszerzeniem pgvector","must_cite":true}
-{"id":"q04","question":"Jakie są endpointy API?","expected":"POST /documents (upload), GET /documents (list), GET /documents/{id} (detail), POST /query (search), POST /answer (answer with citations)","must_cite":true}
-{"id":"q05","question":"Jaki model embeddingów jest używany?","expected":"sentence-transformers (all-MiniLM-L6-v2) lokalnie lub OpenAI","must_cite":true}
-{"id":"q06","question":"Jak działa chunking dokumentów?","expected":"Dokumenty są dzielone na chunki o rozmiarze 1000 znaków z overlapem 150 znaków","must_cite":true}
-{"id":"q07","question":"Jakie są wymagania do uruchomienia?","expected":"Docker, Poetry, Python 3.10+","must_cite":true}
-{"id":"q08","question":"Jak przebiega proces upload dokumentu?","expected":"Upload pliku, ekstrakcja tekstu, chunking, generowanie embeddingów, zapis do bazy","must_cite":true}
-{"id":"q09","question":"Co to jest pgvector?","expected":"Rozszerzenie PostgreSQL do przechowywania i wyszukiwania wektorów","must_cite":true}
-{"id":"q10","question":"Jakie formaty dokumentów są obsługiwane?","expected":"PDF (poprzez pypdf i pdfplumber)","must_cite":true}
-{"id":"q11","question":"Jak działa similarity search?","expected":"Używa operatora <=> w pgvector do obliczania odległości cosinusowej między wektorami","must_cite":true}
-{"id":"q12","question":"Jaki jest rozmiar wektora embeddingu?","expected":"384 wymiary dla all-MiniLM-L6-v2","must_cite":true}
-{"id":"q13","question":"Jakie są metadane chunków?","expected":"page_number, chunk_index, chunk_metadata z informacjami o stronie","must_cite":true}
-{"id":"q14","question":"Jak uruchomić aplikację?","expected":"Użyj setup.sh lub docker-compose up, następnie uvicorn app.main:app","must_cite":true}
-{"id":"q15","question":"Jakie są tabele w bazie danych?","expected":"documents, document_pages, chunks, embeddings","must_cite":true}
-{"id":"q16","question":"Co to jest alembic?","expected":"Narzędzie do migracji schematów bazy danych dla SQLAlchemy","must_cite":true}
-{"id":"q17","question":"Jak działa background processing?","expected":"FastAPI BackgroundTasks do asynchronicznego przetwarzania dokumentów","must_cite":true}
-{"id":"q18","question":"Jakie są parametry query?","expected":"question (pytanie) i top_k (liczba wyników, 1-50)","must_cite":true}
-{"id":"q19","question":"Co zwraca endpoint /answer?","expected":"answer (odpowiedź), citations (cytowania z document_id, page, chunk_id, quote), has_sufficient_context","must_cite":true}
-{"id":"q20","question":"Jaki jest system prompt dla LLM?","expected":"Odpowiadaj WYŁĄCZNIE na podstawie kontekstu, jeśli brak danych powiedz że nie wiesz, dla każdego faktu podaj cytowanie","must_cite":true}
-{"id":"q21","question":"Jakie są zależności Pythona?","expected":"fastapi, uvicorn, psycopg2-binary, sqlalchemy, pydantic, openai, sentence-transformers","must_cite":true}
-{"id":"q22","question":"Jak jest strukturalizowana odpowiedź z cytowaniami?","expected":"Pydantic model AnswerWithCitations z polami answer, citations (lista Citation), has_sufficient_context","must_cite":true}
-{"id":"q23","question":"Co to jest Citation?","expected":"Model zawierający document_id, document_title, page_number, chunk_id, quote","must_cite":true}
-{"id":"q24","question":"Jakie są porty używane przez aplikację?","expected":"8000 dla API, 5432 dla PostgreSQL","must_cite":true}
-{"id":"q25","question":"Jaki model OpenAI jest używany?","expected":"gpt-4o-mini dla generowania odpowiedzi","must_cite":true}
-{"id":"q26","question":"Co się dzieje gdy brak kontekstu?","expected":"System zwraca 'Brak informacji w dokumentach' i puste citations","must_cite":true}
-{"id":"q27","question":"Jakie są zmienne środowiskowe?","expected":"DATABASE_URL, OPENAI_API_KEY","must_cite":true}
-{"id":"q28","question":"Jak działa fallback bez OpenAI?","expected":"Zwraca top 3 chunki jako answer z wszystkimi jako citations","must_cite":true}
-{"id":"q29","question":"Jakie są testy w projekcie?","expected":"test_root, test_upload_document, test_query, test_health","must_cite":true}
-{"id":"q30","question":"Jaka jest architektura projektu?","expected":"app/ (API, modele, chunker, embeddings), migrations/ (alembic), tests/, eval/ (ewaluacja)","must_cite":true}
+{"id":"q01","question":"Jaki jest numer faktury?","expected":"FV/2025/01/0847","must_cite":true,"category":"answerable","document":"invoice"}
+{"id":"q02","question":"Jaka jest całkowita kwota brutto do zapłaty na fakturze?","expected":"74 033,70 PLN","must_cite":true,"category":"answerable","document":"invoice"}
+{"id":"q03","question":"Kto jest sprzedawcą na fakturze?","expected":"TechStore Electronics Sp. z o.o., ul. Handlowa 15, Warszawa","must_cite":true,"category":"answerable","document":"invoice"}
+{"id":"q04","question":"Ile laptopów Dell Latitude zostało zamówionych?","expected":"5 sztuk","must_cite":true,"category":"answerable","document":"invoice"}
+{"id":"q05","question":"Jaki jest termin płatności faktury?","expected":"29.01.2025 (14 dni od daty wystawienia)","must_cite":true,"category":"answerable","document":"invoice"}
+{"id":"q06","question":"Ile wynosi stawka VAT na tej fakturze?","expected":"23%","must_cite":true,"category":"answerable","document":"invoice"}
+{"id":"q07","question":"Jaki rabat został udzielony na tę fakturę?","expected":"Brak informacji o rabacie w dokumencie","must_cite":false,"category":"unanswerable","document":"invoice"}
+{"id":"q08","question":"Ile kosztuje jeden monitor Dell UltraSharp?","expected":"1 850,00 PLN netto (2 279,55 PLN brutto z VAT)","must_cite":true,"category":"answerable","document":"invoice"}
+{"id":"q09","question":"Jaka jest łączna wartość usług na fakturze?","expected":"1 650,00 PLN netto (konfiguracja + dostawa)","must_cite":true,"category":"multi-hop","document":"invoice"}
+{"id":"q10","question":"Czy faktura zawiera gwarancję producenta?","expected":"Tak, gwarancja producenta zgodnie z warunkami + dodatkowa Dell ProSupport Plus 3 lata dla laptopów","must_cite":true,"category":"multi-hop","document":"invoice"}
+{"id":"q11","question":"Jakie są wymagania systemowe dla centrali Smart Home Pro?","expected":"Procesor ARM Cortex-A53 quad-core 1.4 GHz, 2 GB RAM DDR4, 16 GB eMMC, zasilanie 12V DC 2A","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q12","question":"Jakie systemy operacyjne są wymagane dla aplikacji mobilnej?","expected":"iOS 14.0 lub nowszy, Android 9.0 lub nowszy","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q13","question":"Jak dodać urządzenie Zigbee do systemu?","expected":"W aplikacji wybierz Dodaj urządzenie, wybierz typ, wprowadź urządzenie w tryb parowania, zaczekaj na wykrycie (max 30s), nadaj nazwę","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q14","question":"Jaka jest maksymalna liczba urządzeń Zigbee w systemie?","expected":"50 urządzeń Zigbee","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q15","question":"Jak długo trwa gwarancja na centralę?","expected":"24 miesiące od daty zakupu","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q16","question":"Co obejmuje tryb wakacyjny (Away)?","expected":"Symulacja obecności (losowe światła), alarm włączony, obniżona temperatura o 4°C, powiadomienia o zdarzeniach, automatyczne zamykanie rolet","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q17","question":"Czy system obsługuje Apple HomeKit?","expected":"Brak informacji o obsłudze Apple HomeKit w dokumencie","must_cite":false,"category":"unanswerable","document":"manual"}
+{"id":"q18","question":"Jaka jest różnica między trybem domowym a nocnym?","expected":"Tryb nocny: wyłączone powiadomienia dźwiękowe (oprócz pożaru), przyciemnione światła, temperatura obniżona o 2°C. Tryb domowy: wszystkie funkcje aktywne, alarm wyłączony","must_cite":true,"category":"multi-hop","document":"manual"}
+{"id":"q19","question":"Jakie porty muszą być otwarte w routerze?","expected":"8080 (HTTP) i 8443 (HTTPS)","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q20","question":"Co zrobić gdy centrala nie włącza się?","expected":"Sprawdź zasilacz, użyj oryginalnego 12V 2A, spróbuj innego gniazdka, kontakt: serwis@techhome.pl","must_cite":true,"category":"answerable","document":"manual"}
+{"id":"q21","question":"Jaki jest numer umowy zlecenia?","expected":"2025/SVC/0089","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q22","question":"Jakie jest całkowite wynagrodzenie netto Wykonawcy?","expected":"45 000 PLN netto (55 350 PLN brutto z VAT)","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q23","question":"Kiedy obowiązuje umowa?","expected":"Od 15 stycznia 2025 do 15 maja 2025","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q24","question":"Ile wynosi wynagrodzenie za Milestone 3?","expected":"15 000 PLN netto","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q25","question":"Jakie technologie mają być użyte w projekcie?","expected":"Backend: Python 3.11, FastAPI, PostgreSQL; Frontend: React 18, TypeScript, TailwindCSS; Infrastruktura: Docker, Kubernetes, AWS","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q26","question":"Jak długo trwa okres poufności po zakończeniu umowy?","expected":"3 lata od daty zakończenia umowy","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q27","question":"Jaka jest kara za zwłokę w realizacji Milestone?","expected":"500 PLN za każdy dzień opóźnienia, maksymalnie do 20% wynagrodzenia za ten etap","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q28","question":"Czy umowa zawiera klauzulę arbitrażową?","expected":"Brak klauzuli arbitrażowej - spory rozstrzyga sąd właściwy dla siedziby Zamawiającego","must_cite":true,"category":"unanswerable","document":"contract"}
+{"id":"q29","question":"Jaki jest termin na usunięcie uwag po odbiorze?","expected":"Wykonawca ma 5 dni roboczych na usunięcie uwag zgłoszonych przez Zamawiającego","must_cite":true,"category":"answerable","document":"contract"}
+{"id":"q30","question":"Jakie są warunki gwarancji po zakończeniu projektu?","expected":"12 miesięcy od odbioru końcowego: naprawa błędów krytycznych w 24h, poważnych w 72h, drobnych w 7 dni; wsparcie 9-17 dni robocze","must_cite":true,"category":"multi-hop","document":"contract"}

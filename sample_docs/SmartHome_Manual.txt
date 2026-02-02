@@ -1,0 +1,263 @@
+# INSTRUKCJA OBSŁUGI SYSTEMU SMART HOME PRO v2.1
+
+Data wydania: 15 stycznia 2025
+Producent: TechHome Solutions Sp. z o.o.
+Wersja dokumentu: 2.1.0
+
+---
+
+## 1. WPROWADZENIE
+
+System Smart Home Pro to zaawansowane rozwiązanie do automatyzacji domu. Umożliwia centralne sterowanie oświetleniem, ogrzewaniem, roletami, systemem alarmowym oraz monitoringiem.
+
+### 1.1 Cechy systemu
+- Sterowanie przez aplikację mobilną (iOS, Android)
+- Integracja z asystentami głosowymi (Alexa, Google Assistant, Siri)
+- Harmonogramy czasowe dla wszystkich urządzeń
+- Scenariusze automatyzacji (np. "wyjście z domu", "powrót")
+- Zdalne zarządzanie przez Internet
+- Bezprzewodowa komunikacja Zigbee i Wi-Fi
+
+---
+
+## 2. WYMAGANIA SYSTEMOWE
+
+### 2.1 Centrala sterująca
+- Procesor: ARM Cortex-A53 quad-core 1.4 GHz
+- RAM: 2 GB DDR4
+- Pamięć: 16 GB eMMC
+- Zasilanie: 12V DC, 2A
+- Złącza: Ethernet (RJ45), USB 2.0 x2, microSD
+- Komunikacja: Wi-Fi 802.11ac, Zigbee 3.0, Bluetooth 5.0
+
+### 2.2 Aplikacja mobilna
+- iOS 14.0 lub nowszy
+- Android 9.0 lub nowszy
+- Połączenie internetowe (minimum 2 Mbps)
+
+### 2.3 Infrastruktura sieciowa
+- Router Wi-Fi z obsługą 2.4 GHz i 5 GHz
+- Łącze internetowe (zalecane minimum 10 Mbps)
+- Otwarte porty: 8080 (HTTP), 8443 (HTTPS)
+
+---
+
+## 3. INSTALACJA
+
+### 3.1 Przygotowanie
+1. Rozpakuj centralę sterującą
+2. Podłącz zasilacz 12V DC
+3. Podłącz kabel Ethernet do routera (opcjonalnie - można użyć Wi-Fi)
+4. Włącz centralę przyciskiem Power
+
+### 3.2 Konfiguracja początkowa
+1. Zainstaluj aplikację "Smart Home Pro" ze sklepu App Store lub Google Play
+2. Uruchom aplikację i wybierz "Dodaj nową centralę"
+3. Postępuj zgodnie z instrukcjami w aplikacji:
+   - Zeskanuj kod QR na spodzie centrali
+   - Wprowadź hasło Wi-Fi (jeśli nie używasz Ethernet)
+   - Zaczekaj na zakończenie konfiguracji (około 2 minuty)
+4. Utwórz konto użytkownika lub zaloguj się istniejącym
+
+### 3.3 Dodawanie urządzeń
+**Urządzenia Zigbee:**
+1. W aplikacji wybierz "Dodaj urządzenie"
+2. Wybierz typ urządzenia (żarówka, gniazdko, czujnik, itp.)
+3. Wprowadź urządzenie w tryb parowania (szczegóły w instrukcji urządzenia)
+4. Zaczekaj na automatyczne wykrycie (max 30 sekund)
+5. Nadaj nazwę urządzeniu i przypisz do pomieszczenia
+
+**Urządzenia Wi-Fi:**
+1. Podłącz urządzenie do zasilania
+2. W aplikacji wybierz "Dodaj urządzenie Wi-Fi"
+3. Postępuj zgodnie z instrukcjami producenta urządzenia
+4. Po połączeniu nadaj nazwę i przypisz do pomieszczenia
+
+---
+
+## 4. KONFIGURACJA SYSTEMU
+
+### 4.1 Tworzenie pomieszczeń
+1. Przejdź do menu "Pomieszczenia"
+2. Kliknij "Dodaj pomieszczenie"
+3. Wprowadź nazwę (np. "Salon", "Sypialnia")
+4. Wybierz ikonę reprezentującą typ pomieszczenia
+5. Zapisz zmiany
+
+### 4.2 Harmonogramy
+Harmonogramy pozwalają na automatyczne działania o określonych porach.
+
+**Przykład - Oświetlenie poranne:**
+1. Menu "Automatyzacja" → "Harmonogramy" → "Dodaj"
+2. Nazwa: "Światło poranne"
+3. Godzina: 07:00 (poniedziałek-piątek)
+4. Akcja: Włącz światło w sypialni (jasność 30%)
+5. Zapisz
+
+### 4.3 Scenariusze
+Scenariusze to zbiory akcji wykonywanych jednym kliknięciem.
+
+**Przykład - Wyjście z domu:**
+1. Menu "Automatyzacja" → "Scenariusze" → "Dodaj"
+2. Nazwa: "Wychodzę"
+3. Dodaj akcje:
+   - Wyłącz wszystkie światła
+   - Zamknij rolety w salonie
+   - Włącz alarm
+   - Ustaw termostat na 18°C
+4. Zapisz
+
+### 4.4 Integracja z asystentami głosowymi
+**Google Assistant:**
+1. W aplikacji Google Home wybierz "Dodaj urządzenie"
+2. Znajdź "Smart Home Pro" na liście
+3. Zaloguj się swoim kontem
+4. Autoryzuj dostęp
+5. Urządzenia pojawią się w Google Home
+
+**Amazon Alexa:**
+1. Otwórz aplikację Alexa
+2. Menu → "Umiejętności"
+3. Wyszukaj "Smart Home Pro"
+4. Włącz umiejętność
+5. Zaloguj się swoim kontem
+6. Wykryj urządzenia komendą "Alexa, znajdź urządzenia"
+
+---
+
+## 5. TRYBY PRACY
+
+### 5.1 Tryb domowy (Home)
+- Wszystkie funkcje aktywne
+- Alarm wyłączony
+- Normalne ustawienia komfortu
+
+### 5.2 Tryb nocny (Night)
+- Wyłączone powiadomienia dźwiękowe (oprócz alarmu pożarowego)
+- Automatyczne przyciemnienie świateł
+- Obniżona temperatura o 2°C
+
+### 5.3 Tryb wakacyjny (Away)
+- Symulacja obecności (losowe włączanie świateł)
+- Alarm włączony
+- Obniżona temperatura o 4°C
+- Powiadomienia o wszystkich zdarzeniach
+- Automatyczne zamykanie rolet wieczorem
+
+---
+
+## 6. ROZWIĄZYWANIE PROBLEMÓW
+
+### 6.1 Centrala nie włącza się
+- Sprawdź podłączenie zasilacza
+- Upewnij się, że używasz oryginalnego zasilacza 12V 2A
+- Spróbuj innego gniazdka elektrycznego
+- Kontakt z serwisem: serwis@techhome.pl
+
+### 6.2 Brak połączenia z internetem
+- Sprawdź połączenie kabla Ethernet
+- Lub sprawdź hasło Wi-Fi w ustawieniach centrali
+- Zrestartuj router
+- Sprawdź czy router ma połączenie z internetem
+
+### 6.3 Urządzenie Zigbee nie łączy się
+- Upewnij się, że urządzenie jest w trybie parowania
+- Maksymalna odległość od centrali: 10 metrów (bez przeszkód)
+- Usuń urządzenie i dodaj ponownie
+- Sprawdź czy centrala nie ma już 50 urządzeń (maksimum dla Zigbee)
+
+### 6.4 Aplikacja zgłasza błąd połączenia
+- Sprawdź połączenie internetowe telefonu
+- Zaktualizuj aplikację do najnowszej wersji
+- Wyloguj się i zaloguj ponownie
+- Wyczyść cache aplikacji
+
+---
+
+## 7. KONSERWACJA
+
+### 7.1 Aktualizacje oprogramowania
+System automatycznie sprawdza dostępność aktualizacji. Zaleca się instalowanie aktualizacji natychmiast po ich pojawieniu się.
+
+**Ręczna aktualizacja:**
+1. Menu → "Ustawienia" → "O systemie"
+2. "Sprawdź aktualizacje"
+3. Jeśli dostępna - kliknij "Pobierz i zainstaluj"
+4. Nie wyłączaj centrali podczas aktualizacji (trwa 5-10 minut)
+
+### 7.2 Kopia zapasowa konfiguracji
+Zalecane co 3 miesiące lub przed większą zmianą konfiguracji.
+
+1. Menu → "Ustawienia" → "Kopia zapasowa"
+2. "Utwórz kopię zapasową"
+3. Kopia zostanie zapisana w chmurze
+4. Dodatkowo można pobrać plik na telefon
+
+### 7.3 Czyszczenie centrali
+- Wyłącz centralę przed czyszczeniem
+- Używaj suchej, miękkiej ściereczki
+- NIE używaj detergentów ani środków na bazie alkoholu
+- NIE moc centrali w wodzie
+
+---
+
+## 8. DANE TECHNICZNE
+
+### 8.1 Centrala SmartHub Pro
+- Wymiary: 150 x 150 x 40 mm
+- Waga: 320 g
+- Temperatura pracy: 0°C do +40°C
+- Wilgotność: 10% - 90% (bez kondensacji)
+- Pobór mocy: maksymalnie 12W
+- Normy: CE, RoHS, FCC
+
+### 8.2 Limity systemowe
+- Maksymalna liczba urządzeń Zigbee: 50
+- Maksymalna liczba urządzeń Wi-Fi: 20
+- Maksymalna liczba harmonogramów: 100
+- Maksymalna liczba scenariuszy: 50
+- Maksymalna liczba użytkowników: 10
+
+---
+
+## 9. GWARANCJA
+
+### 9.1 Warunki gwarancji
+- Okres gwarancji: 24 miesiące od daty zakupu
+- Gwarancja obejmuje wady produkcyjne
+- Gwarancja NIE obejmuje:
+  * Uszkodzeń mechanicznych
+  * Uszkodzeń powstałych w wyniku nieprawidłowego użytkowania
+  * Uszkodzeń spowodowanych żywiołem
+  * Samodzielnych napraw lub modyfikacji
+
+### 9.2 Procedura zgłoszenia reklamacji
+1. Skontaktuj się z Działem Reklamacji: reklamacje@techhome.pl
+2. Podaj numer seryjny urządzenia (na spodzie centrali)
+3. Opisz problem i załącz zdjęcia (jeśli masz)
+4. Otrzymasz numer RMA i instrukcje wysyłki
+5. Wyślij urządzenie w oryginalnym opakowaniu
+6. Czas rozpatrzenia: do 14 dni roboczych
+
+---
+
+## 10. KONTAKT
+
+**TechHome Solutions Sp. z o.o.**
+ul. Innowacyjna 42
+02-123 Warszawa
+Polska
+
+📞 Infolinia: +48 22 123 45 67 (pn-pt, 9:00-17:00)
+📧 Email: support@techhome.pl
+🌐 Web: www.techhome.pl
+
+Serwis techniczny: serwis@techhome.pl
+Reklamacje: reklamacje@techhome.pl
+Dział handlowy: sprzedaz@techhome.pl
+
+---
+
+**KONIEC DOKUMENTU**
+
+© 2025 TechHome Solutions. Wszystkie prawa zastrzeżone.

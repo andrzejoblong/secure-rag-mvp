@@ -1,0 +1,304 @@
+UMOWA ZLECENIA Nr 2025/SVC/0089
+
+zawarta w dniu 10 stycznia 2025 roku w Warszawie
+
+pomiędzy:
+
+═══════════════════════════════════════════════════════════
+
+ZAMAWIAJĄCY (Zleceniodawca):
+
+CloudTech Solutions Sp. z o.o.
+ul. Chmurna 33
+01-234 Warszawa
+NIP: 5272948506
+REGON: 384729610
+reprezentowana przez: Marka Wiśniewskiego - Prezesa Zarządu
+
+zwana dalej "Zamawiającym"
+
+a
+
+WYKONAWCA (Zleceniobiorca):
+
+Jan Kowalski
+Prowadzący działalność gospodarczą pod nazwą:
+"KowalSoft - Usługi IT"
+ul. Programistów 12/45
+02-567 Warszawa
+NIP: 6182839405
+REGON: 147852398
+
+zwany dalej "Wykonawcą"
+
+═══════════════════════════════════════════════════════════
+
+§ 1. PRZEDMIOT UMOWY
+
+1. Zamawiający zleca, a Wykonawca przyjmuje do wykonania usługę 
+   polegającą na:
+   
+   a) Tworzeniu aplikacji webowej do zarządzania projektami
+   b) Integracji z istniejącymi systemami Zamawiającego (CRM, ERP)
+   c) Wdrożeniu systemu autentykacji i autoryzacji użytkowników
+   d) Przygotowaniu dokumentacji technicznej
+   e) Przeprowadzeniu szkoleń dla administratorów systemu
+
+2. Technologie do wykorzystania:
+   - Backend: Python 3.11, FastAPI, PostgreSQL
+   - Frontend: React 18, TypeScript, TailwindCSS
+   - Infrastruktura: Docker, Kubernetes, AWS
+   - CI/CD: GitHub Actions, ArgoCD
+
+3. Szczegółowy zakres prac określony został w Załączniku nr 1 
+   "Specyfikacja wymagań funkcjonalnych".
+
+═══════════════════════════════════════════════════════════
+
+§ 2. TERMIN REALIZACJI
+
+1. Umowa obowiązuje od dnia 15 stycznia 2025 do dnia 15 maja 2025.
+
+2. Kamienie milowe projektu:
+
+   Milestone 1: Architektura i prototyp (15.02.2025)
+   - Dokumentacja architektury
+   - Działający prototyp UI
+   - Plan bazy danych
+   Wynagrodzenie: 8 000 PLN netto
+
+   Milestone 2: Backend i API (15.03.2025)
+   - Funkcjonalne API
+   - Testy jednostkowe (pokrycie >80%)
+   - Dokumentacja API (OpenAPI/Swagger)
+   Wynagrodzenie: 12 000 PLN netto
+
+   Milestone 3: Frontend i integracje (15.04.2025)
+   - Pełna funkcjonalność UI
+   - Integracja z CRM i ERP
+   - Testy end-to-end
+   Wynagrodzenie: 15 000 PLN netto
+
+   Milestone 4: Wdrożenie i szkolenia (15.05.2025)
+   - Uruchomienie produkcyjne
+   - Szkolenia (3 sesje po 4h)
+   - Dokumentacja użytkownika
+   Wynagrodzenie: 10 000 PLN netto
+
+3. Termin może ulec przedłużeniu za zgodą obu stron, wyrażoną 
+   w formie aneksu do umowy.
+
+═══════════════════════════════════════════════════════════
+
+§ 3. WYNAGRODZENIE
+
+1. Całkowite wynagrodzenie Wykonawcy wynosi 45 000 PLN (słownie:
+   czterdzieści pięć tysięcy złotych) netto plus VAT 23%.
+
+2. Wynagrodzenie brutto: 55 350 PLN.
+
+3. Wynagrodzenie płatne będzie po zakończeniu każdego Milestone
+   na podstawie faktury VAT wystawionej przez Wykonawcę.
+
+4. Termin płatności: 14 dni od daty otrzymania faktury przez
+   Zamawiającego.
+
+5. Płatność przelewem na konto Wykonawcy:
+   Bank: mBank S.A.
+   Nr konta: PL 12 1140 2004 0000 3902 7849 5123
+
+6. Za dzień zapłaty uznaje się dzień obciążenia rachunku
+   Zamawiającego.
+
+7. W przypadku opóźnienia w płatności Wykonawca może naliczyć
+   odsetki ustawowe za każdy dzień opóźnienia.
+
+═══════════════════════════════════════════════════════════
+
+§ 4. PRAWA AUTORSKIE
+
+1. Wykonawca oświadcza, że przysługują mu wyłączne i nieograniczone
+   prawa autorskie do utworów wytworzonych w ramach umowy.
+
+2. Z chwilą zapłaty wynagrodzenia za dany Milestone, Wykonawca
+   przenosi na Zamawiającego całość majątkowych praw autorskich
+   do utworów wytworzonych w ramach tego etapu na następujących
+   polach eksploatacji:
+   
+   a) utrwalanie i zwielokrotnianie dowolną techniką,
+   b) wprowadzanie do pamięci komputera i sieci komputerowej,
+   c) publiczne wykonanie, wystawienie, wyświetlenie,
+   d) publiczne udostępnianie w taki sposób, aby każdy mógł mieć
+      do niego dostęp w miejscu i czasie przez siebie wybranym,
+   e) modyfikacja i adaptacja,
+   f) wykorzystanie w celach komercyjnych.
+
+3. Przeniesienie praw następuje bez ograniczeń terytorialnych.
+
+4. Wynagrodzenie określone w § 3 obejmuje wynagrodzenie za
+   przeniesienie praw autorskich.
+
+═══════════════════════════════════════════════════════════
+
+§ 5. POUFNOŚĆ
+
+1. Strony zobowiązują się do zachowania w tajemnicy wszelkich
+   informacji poufnych otrzymanych w związku z realizacją umowy.
+
+2. Za informacje poufne uznaje się w szczególności:
+   - Kod źródłowy aplikacji
+   - Dane dostępowe do systemów
+   - Strategię biznesową Zamawiającego
+   - Dane klientów i użytkowników
+   - Wyniki testów i audytów
+
+3. Obowiązek zachowania poufności obowiązuje przez okres 3 lat
+   od daty zakończenia umowy.
+
+4. Wykonawca zobowiązuje się do nieprzekazywania informacji
+   poufnych osobom trzecim bez pisemnej zgody Zamawiającego.
+
+5. Naruszenie obowiązku poufności skutkuje karą umowną w wysokości
+   50 000 PLN, niezależnie od prawa do dochodzenia odszkodowania
+   uzupełniającego.
+
+═══════════════════════════════════════════════════════════
+
+§ 6. ODPOWIEDZIALNOŚĆ I KARY UMOWNE
+
+1. W przypadku niewykonania lub nienależytego wykonania umowy
+   przez Wykonawcę, Zamawiający może naliczyć następujące kary:
+
+   a) Za zwłokę w realizacji Milestone - 500 PLN za każdy dzień
+      opóźnienia, maksymalnie do 20% wynagrodzenia za ten etap,
+   
+   b) Za odstąpienie od umowy z winy Wykonawcy - 30% całkowitego
+      wynagrodzenia umownego,
+   
+   c) Za naruszenie postanowień § 4 (prawa autorskie) - 25 000 PLN
+      za każde naruszenie,
+   
+   d) Za naruszenie postanowień § 5 (poufność) - 50 000 PLN.
+
+2. W przypadku opóźnienia w płatności przez Zamawiającego,
+   Wykonawca może naliczyć karę umowną w wysokości 0,1%
+   zaległej kwoty za każdy dzień opóźnienia.
+
+3. Zapłata kary umownej nie wyklucza dochodzenia odszkodowania
+   uzupełniającego na zasadach ogólnych Kodeksu Cywilnego.
+
+4. Kary umowne płatne są w terminie 7 dni od daty wystawienia
+   noty obciążeniowej.
+
+═══════════════════════════════════════════════════════════
+
+§ 7. ODBIÓR PRAC
+
+1. Po zakończeniu każdego Milestone Wykonawca zgłasza gotowość
+   do odbioru w formie email do Zamawiającego.
+
+2. Zamawiający ma 7 dni roboczych na przeprowadzenie testów
+   akceptacyjnych i zgłoszenie uwag.
+
+3. Protokół odbioru sporządzany jest w formie pisemnej i podpisywany
+   przez obie strony.
+
+4. Jeśli w terminie 7 dni Zamawiający nie zgłosi uwag, uznaje się
+   że prace zostały przyjęte bez zastrzeżeń.
+
+5. W przypadku zgłoszenia uwag, Wykonawca ma 5 dni roboczych na
+   ich usunięcie. Ponowny odbiór następuje według procedury z pkt. 2.
+
+═══════════════════════════════════════════════════════════
+
+§ 8. GWARANCJA I WSPARCIE
+
+1. Wykonawca udziela 12-miesięcznej gwarancji na wykonane prace,
+   liczonej od daty odbioru końcowego (Milestone 4).
+
+2. Gwarancja obejmuje:
+   - Naprawę błędów krytycznych w ciągu 24h
+   - Naprawę błędów poważnych w ciągu 72h
+   - Naprawę błędów drobnych w ciągu 7 dni
+
+3. Przez okres gwarancji Wykonawca zobowiązuje się do:
+   - Aktualizacji bezpieczeństwa (security patches)
+   - Konsultacji technicznych (max 8h miesięcznie)
+   - Wsparcia przy problemach produkcyjnych
+
+4. Wsparcie gwarancyjne świadczone jest zdalnie, w godzinach
+   pracy: 9:00-17:00, dni robocze.
+
+5. Po okresie gwarancyjnym możliwe jest zawarcie umowy na
+   wsparcie techniczne (SLA) na preferencyjnych warunkach.
+
+═══════════════════════════════════════════════════════════
+
+§ 9. ROZWIĄZANIE UMOWY
+
+1. Umowa może zostać rozwiązana:
+   
+   a) Za porozumieniem stron w każdym czasie,
+   
+   b) Przez każdą ze stron z zachowaniem 30-dniowego okresu
+      wypowiedzenia, z ważnych przyczyn,
+   
+   c) Przez Zamawiającego ze skutkiem natychmiastowym w przypadku:
+      - Powtarzającego się (więcej niż 2x) niedotrzymania terminów
+      - Rażącego naruszenia obowiązku poufności
+      - Nienależytego wykonania prac potwierdzonego przez niezależny
+        audyt techniczny,
+   
+   d) Przez Wykonawcę ze skutkiem natychmiastowym w przypadku:
+      - Opóźnienia w płatności przekraczającego 30 dni
+      - Trzykrotnego nieuzasadnionego odrzucenia prac.
+
+2. Rozwiązanie umowy nie zwalnia stron z obowiązków wynikających
+   z § 4 (prawa autorskie) i § 5 (poufność).
+
+═══════════════════════════════════════════════════════════
+
+§ 10. POSTANOWIENIA KOŃCOWE
+
+1. Wszelkie zmiany umowy wymagają formy pisemnej pod rygorem
+   nieważności (aneks do umowy).
+
+2. W sprawach nieuregulowanych umową mają zastosowanie przepisy
+   Kodeksu Cywilnego.
+
+3. Spory wynikłe z realizacji umowy strony będą starały się
+   rozwiązać polubownie. W przypadku braku porozumienia, spory
+   rozstrzygane będą przez sąd właściwy dla siedziby Zamawiającego.
+
+4. Umowa została sporządzona w dwóch jednobrzmiących egzemplarzach,
+   po jednym dla każdej ze stron.
+
+5. Integralną część umowy stanowią następujące załączniki:
+   - Załącznik nr 1: Specyfikacja wymagań funkcjonalnych (15 stron)
+   - Załącznik nr 2: Harmonogram szczegółowy projektu (5 stron)
+   - Załącznik nr 3: Procedura zgłaszania i obsługi błędów (3 strony)
+
+═══════════════════════════════════════════════════════════
+
+PODPISY STRON:
+
+
+ZAMAWIAJĄCY                              WYKONAWCA
+CloudTech Solutions Sp. z o.o.           Jan Kowalski
+                                         "KowalSoft - Usługi IT"
+
+
+.......................................  .......................................
+Marek Wiśniewski                         Jan Kowalski
+Prezes Zarządu                           Właściciel
+
+
+Data: 10.01.2025                         Data: 10.01.2025
+Miejsce: Warszawa                        Miejsce: Warszawa
+
+
+[PIECZĘĆ FIRMOWA]                        [PIECZĘĆ FIRMOWA]
+
+═══════════════════════════════════════════════════════════
+
+KONIEC UMOWY / END OF CONTRACT
