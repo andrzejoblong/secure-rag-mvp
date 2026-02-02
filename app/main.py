@@ -3,6 +3,10 @@ import os
 import uuid
 from typing import Dict, Optional, List
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = FastAPI(
     title="RAG MVP API",
@@ -24,6 +28,7 @@ if USE_DATABASE:
         from app.text_extraction import extract_text
         from app.chunker import chunk_pages
         from app.answer import generate_answer, AnswerWithCitations, Citation
+        from app.hybrid_search import HybridSearcher
         
         # Try local embeddings first, fall back to OpenAI
         try:
@@ -312,6 +317,103 @@ def get_document_status(doc_id: str):
             "storage": "in-memory"
         }
 
+# Helper function for hybrid search
+def hybrid_search_query(question: str, top_k: int, db):
+    """
+    Perform hybrid search combining BM25 and semantic search.
+    
+    Args:
+        question: Search query
+        top_k: Number of results to return
+        db: Database session
+        
+    Returns:
+        List of search results with scores
+    """
+    import numpy as np
+    
+    # Get ALL chunks and their embeddings from database
+    sql_all = text("""
+        SELECT 
+            c.id,
+            c.text,
+            c.page_number,
+            c.chunk_metadata,
+            d.title,
+            d.id as document_id,
+            e.embedding
+        FROM chunks c
+        JOIN embeddings e ON c.id = e.chunk_id
+        JOIN documents d ON c.document_id = d.id
+    """)
+    
+    all_chunks_raw = db.execute(sql_all).fetchall()
+    
+    if not all_chunks_raw:
+        return []
+    
+    # Generate query embedding
+    if EMBEDDING_TYPE == "openai":
+        query_embedding = get_embedding(question, api_key=OPENAI_API_KEY)
+    else:  # local
+        query_embedding = get_embedding(question)
+    
+    # Convert to list if numpy array
+    if hasattr(query_embedding, 'tolist'):
+        query_embedding_list = query_embedding.tolist()
+    else:
+        query_embedding_list = query_embedding
+    
+    # Prepare chunks for hybrid search
+    chunks = []
+    chunk_embeddings = []
+    
+    for row in all_chunks_raw:
+        chunks.append({
+            'id': row[0],
+            'text': row[1],
+            'page_number': row[2],
+            'metadata': row[3],
+            'document_title': row[4],
+            'document_id': row[5]
+        })
+        chunk_embeddings.append(row[6])
+    
+    # Calculate semantic similarities
+    query_vec = np.array(query_embedding_list)
+    
+    semantic_scores = []
+    for emb in chunk_embeddings:
+        # Convert string representation to numpy array if needed
+        if isinstance(emb, str):
+            emb = np.fromstring(emb.strip('[]'), sep=',')
+        elif not isinstance(emb, np.ndarray):
+            emb = np.array(emb)
+        
+        # Cosine similarity
+        similarity = float(np.dot(query_vec, emb))
+        semantic_scores.append(similarity)
+    
+    # Create hybrid searcher and get results
+    hybrid_searcher = HybridSearcher(chunks, bm25_weight=0.3, semantic_weight=0.7)
+    hybrid_results = hybrid_searcher.search(question, semantic_scores, top_k=top_k)
+    
+    # Format results
+    results = []
+    for idx, score in hybrid_results:
+        chunk = chunks[idx]
+        results.append({
+            "chunk_id": chunk['id'],
+            "text": chunk['text'],
+            "page_number": chunk['page_number'],
+            "metadata": chunk['metadata'],
+            "document": chunk['document_title'],
+            "document_id": str(chunk['document_id']),
+            "similarity_score": float(score)
+        })
+    
+    return results
+
 @app.post("/query", response_model=QueryResponse, tags=["Query"])
 def query_documents(
     query: QueryRequest
@@ -456,53 +558,10 @@ def answer_question(
     
     db = SessionLocal()
     try:
-        # 1. Generate embedding for query
-        if EMBEDDING_TYPE == "openai":
-            query_embedding = get_embedding(query.question, api_key=OPENAI_API_KEY)
-        else:  # local
-            query_embedding = get_embedding(query.question)
+        # 1. Use hybrid search (BM25 + semantic) for better retrieval
+        chunks = hybrid_search_query(query.question, query.top_k, db)
         
-        # Convert to list if numpy array
-        if hasattr(query_embedding, 'tolist'):
-            query_embedding = query_embedding.tolist()
-        
-        # 2. Search for similar chunks
-        sql = text("""
-            SELECT 
-                c.id,
-                c.text,
-                c.page_number,
-                c.chunk_metadata,
-                d.title,
-                d.id as document_id,
-                e.embedding <=> CAST(:embedding AS vector) AS distance
-            FROM chunks c
-            JOIN embeddings e ON c.id = e.chunk_id
-            JOIN documents d ON c.document_id = d.id
-            ORDER BY distance ASC
-            LIMIT :top_k
-        """)
-        
-        results = db.execute(
-            sql,
-            {"embedding": query_embedding, "top_k": query.top_k}
-        ).fetchall()
-        
-        # 3. Prepare chunks for answer generation
-        chunks = [
-            {
-                "chunk_id": r[0],
-                "text": r[1],
-                "page_number": r[2],
-                "metadata": r[3],
-                "document": r[4],
-                "document_id": str(r[5]),
-                "similarity_score": 1 - float(r[6])
-            }
-            for r in results
-        ]
-        
-        # 4. Generate answer with citations
+        # 2. Generate answer with citations
         use_openai = OPENAI_API_KEY is not None
         answer = generate_answer(query.question, chunks, use_openai=use_openai)
         

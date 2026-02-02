@@ -21,6 +21,8 @@ sqlalchemy = "^2.0.46"
 python-multipart = "^0.0.22"
 sentence-transformers = "^5.2.2"
 requests = "^2.31.0"
+rank-bm25 = "^0.2.2"
+python-dotenv = "^1.2.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"

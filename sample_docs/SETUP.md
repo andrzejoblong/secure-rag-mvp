@@ -1,53 +1,53 @@
 # Setup Sample Documents
 
-Ten przewodnik opisuje jak załadować przykładowe dokumenty do systemu RAG przed uruchomieniem ewaluacji.
+This guide describes how to load sample documents into the RAG system before running evaluation.
 
 ## 📁 Sample Documents
 
-System zawiera 3 przykładowe dokumenty testowe:
+The system contains 3 sample test documents:
 
-1. **SmartHome_Manual.txt** - Instrukcja obsługi systemu Smart Home Pro v2.1
-   - 10 sekcji technicznych
-   - Wymagania, instalacja, konfiguracja, rozwiązywanie problemów
-   - ~7000 słów
+1. **SmartHome_Manual.txt** - Smart Home Pro v2.1 User Manual
+   - 10 technical sections
+   - Requirements, installation, configuration, troubleshooting
+   - ~7000 words
 
-2. **Invoice_FV_2025_0847.txt** - Faktura VAT
-   - 10 pozycji (laptopy, monitory, akcesoria IT)
-   - Szczegóły finansowe, terminy płatności
-   - ~1500 słów
+2. **Invoice_FV_2025_0847.txt** - VAT Invoice
+   - 10 line items (laptops, monitors, IT accessories)
+   - Financial details, payment terms
+   - ~1500 words
 
-3. **Contract_SVC_0089.txt** - Umowa zlecenia na projekt IT
-   - 10 paragrafów: zakres, terminy, wynagrodzenie, gwarancja
-   - Kamienie milowe, kary umowne, prawa autorskie
-   - ~3500 słów
+3. **Contract_SVC_0089.txt** - IT Project Service Agreement
+   - 10 paragraphs: scope, timeline, payment, warranty
+   - Milestones, penalties, copyright
+   - ~3500 words
 
-## 🚀 Jak załadować dokumenty
+## 🚀 How to Load Documents
 
-### Opcja A: Przez API (zalecane)
+### Option A: Via API (recommended)
 
 ```bash
-# Upewnij się że API działa
+# Ensure API is running
 curl http://localhost:8000/health
 
-# Załaduj wszystkie 3 dokumenty
+# Load all 3 documents
 for file in sample_docs/*.txt; do
   echo "Uploading $file..."
   curl -X POST http://localhost:8000/documents \
     -F "file=@$file"
   echo ""
-  sleep 5  # Poczekaj na przetworzenie
+  sleep 5  # Wait for processing
 done
 ```
 
-### Opcja B: Przez Swagger UI
+### Option B: Via Swagger UI
 
-1. Otwórz http://localhost:8000/docs
+1. Open http://localhost:8000/docs
 2. Endpoint `POST /documents`
-3. Kliknij "Try it out"
-4. Upload każdego pliku z `sample_docs/`
-5. Poczekaj aż processing się zakończy (check logs)
+3. Click "Try it out"
+4. Upload each file from `sample_docs/`
+5. Wait until processing is complete (check logs)
 
-### Opcja C: Skrypt Python
+### Option C: Python Script
 
 ```python
 import requests
@@ -77,44 +77,44 @@ for doc_file in DOCS_DIR.glob("*.txt"):
 print("\n✓ All documents uploaded!")
 ```
 
-## ✅ Weryfikacja
+## ✅ Verification
 
-Sprawdź czy dokumenty zostały przetworzone:
+Check if documents were processed:
 
 ```bash
-# Lista dokumentów
+# List documents
 curl http://localhost:8000/documents
 
-# Sprawdź szczegóły każdego
+# Check details for each
 curl http://localhost:8000/documents/{document_id}
 ```
 
-Każdy dokument powinien mieć:
-- `chunks` > 0 (liczba chunków)
-- `embeddings` > 0 (wygenerowane embeddingi)
+Each document should have:
+- `chunks` > 0 (number of chunks)
+- `embeddings` > 0 (generated embeddings)
 
-Przykładowe liczby chunków (z chunk_size=1000, overlap=150):
-- SmartHome_Manual.txt: ~45-55 chunków
-- Invoice_FV_2025_0847.txt: ~8-12 chunków  
-- Contract_SVC_0089.txt: ~20-25 chunków
+Example chunk counts (with chunk_size=1000, overlap=150):
+- SmartHome_Manual.txt: ~45-55 chunks
+- Invoice_FV_2025_0847.txt: ~8-12 chunks  
+- Contract_SVC_0089.txt: ~20-25 chunks
 
-## 🧪 Test pojedynczego zapytania
+## 🧪 Test Single Query
 
-Przetestuj czy RAG działa:
+Test if RAG is working:
 
 ```bash
 curl -X POST http://localhost:8000/answer \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "Jaki jest numer faktury?",
+    "question": "What is the invoice number?",
     "top_k": 5
   }'
 ```
 
-Powinno zwrócić:
+Should return:
 ```json
 {
-  "answer": "Numer faktury to FV/2025/01/0847.",
+  "answer": "The invoice number is FV/2025/01/0847.",
   "citations": [
     {
       "document_id": "...",
@@ -128,52 +128,52 @@ Powinno zwrócić:
 }
 ```
 
-## 📊 Uruchomienie pełnej ewaluacji
+## 📊 Run Full Evaluation
 
-Po załadowaniu wszystkich dokumentów:
+After loading all documents:
 
 ```bash
-# Uruchom 30 pytań
+# Run 30 questions
 python eval/run_evaluation.py
 
-# Sprawdź wyniki
+# Check results
 python eval/analyze_results.py
 ```
 
 ## 🔧 Troubleshooting
 
-### Dokumenty się nie przetwarzają
-- Sprawdź logi API (`docker-compose logs app`)
-- Sprawdź czy sentence-transformers został pobrany
-- Sprawdź połączenie z bazą danych
+### Documents not processing
+- Check API logs (`docker-compose logs app`)
+- Check if sentence-transformers was downloaded
+- Check database connection
 
-### Brak embeddingów
-- Sprawdź zmienną `EMBEDDING_TYPE` w logach API
-- Jeśli używasz local - zweryfikuj instalację sentence-transformers
-- Jeśli OpenAI - sprawdź `OPENAI_API_KEY`
+### No embeddings
+- Check `EMBEDDING_TYPE` variable in API logs
+- If using local - verify sentence-transformers installation
+- If OpenAI - check `OPENAI_API_KEY`
 
-### Query nie zwraca wyników
-- Sprawdź czy embeddingi zostały wygenerowane: `GET /documents/{id}`
-- Sprawdź czy pgvector działa: `docker-compose ps`
-- Zwiększ `top_k` do 10-20
+### Query returns no results
+- Check if embeddings were generated: `GET /documents/{id}`
+- Check if pgvector is working: `docker-compose ps`
+- Increase `top_k` to 10-20
 
-## 📝 Dodawanie własnych dokumentów
+## 📝 Adding Custom Documents
 
-Możesz dodać własne pliki .txt do `sample_docs/`:
+You can add your own .txt files to `sample_docs/`:
 
-1. Stwórz plik tekstowy z treścią
-2. Upload przez API
-3. Dodaj pytania do `eval/questions.jsonl`:
+1. Create a text file with content
+2. Upload via API
+3. Add questions to `eval/questions.jsonl`:
    ```json
    {"id":"q31","question":"...","expected":"...","must_cite":true,"category":"answerable","document":"your_doc"}
    ```
-4. Uruchom ponownie ewaluację
+4. Re-run evaluation
 
-## 🎯 Co dalej?
+## 🎯 Next Steps
 
-Po załadowaniu sample docs i uruchomieniu ewaluacji:
+After loading sample docs and running evaluation:
 
-1. **Manualne scorowanie** - Edytuj `eval/evaluation_results.json`
-2. **Analiza wyników** - `python eval/analyze_results.py`
-3. **Iteracja** - Dostosuj chunking, prompts, lub top_k
-4. **Re-evaluate** - Uruchom ponownie i porównaj wyniki
+1. **Manual scoring** - Edit `eval/evaluation_results.json`
+2. **Analyze results** - `python eval/analyze_results.py`
+3. **Iterate** - Adjust chunking, prompts, or top_k
+4. **Re-evaluate** - Run again and compare results

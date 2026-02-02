@@ -55,24 +55,24 @@ System zawiera 3 przykładowe dokumenty:
 
 Każde pytanie oceniane jest w 3 kategoriach (0-2 punkty każda):
 
-### 1. **Correctness (Poprawność)** - 0-2 punkty
-- **0** = Błędna odpowiedź lub halucynacja
-- **1** = Częściowo poprawna
-- **2** = Poprawna odpowiedź
+### 1. **Correctness** - 0-2 points
+- **0** = Incorrect answer or hallucination
+- **1** = Partially correct
+- **2** = Correct answer
 
-### 2. **Grounding/Citations (Cytowania)** - 0-2 punkty
-- **0** = Brak cytowań lub cytowania nietrafione
-- **1** = Są cytowania, ale słabe/nieprecyzyjne
-- **2** = Cytowania trafne i wspierają odpowiedź
+### 2. **Grounding/Citations** - 0-2 points
+- **0** = No citations or irrelevant citations
+- **1** = Citations present but weak/imprecise
+- **2** = Citations accurate and support the answer
 
-### 3. **Completeness (Kompletność)** - 0-2 punkty
-- **0** = Pomija kluczowe elementy
-- **1** = Zawiera większość informacji
-- **2** = Kompletna odpowiedź
+### 3. **Completeness** - 0-2 points
+- **0** = Missing key elements
+- **1** = Contains most information
+- **2** = Complete answer
 
-**Maksymalny wynik:**
-- Na pytanie: 6 punktów
-- Łącznie (30 pytań): 180 punktów
+**Maximum score:**
+- Per question: 6 points
+- Total (30 questions): 180 points
 
 ## 🚀 Użycie
 
