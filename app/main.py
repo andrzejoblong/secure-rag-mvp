@@ -4,7 +4,11 @@ import uuid
 from typing import Dict, Optional, List
 from pydantic import BaseModel, Field
 
-app = FastAPI(title="RAG MVP API", version="1.0.0")
+app = FastAPI(
+    title="RAG MVP API",
+    version="1.0.0",
+    description="Retrieval-Augmented Generation API with citations support"
+)
 
 # Check if database is configured
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -19,6 +23,7 @@ if USE_DATABASE:
         from sqlalchemy.orm import sessionmaker
         from app.text_extraction import extract_text
         from app.chunker import chunk_pages
+        from app.answer import generate_answer, AnswerWithCitations, Citation
         
         # Try local embeddings first, fall back to OpenAI
         try:
@@ -399,5 +404,111 @@ def query_documents(
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Query failed: {str(e)}")
+    finally:
+        db.close()
+
+
+@app.post("/answer", response_model=AnswerWithCitations, tags=["Answer"])
+def answer_question(
+    query: QueryRequest
+):
+    """
+    Answer a question with citations from source documents.
+    
+    This endpoint performs RAG with citation support:
+    1. Retrieves relevant chunks using vector similarity search
+    2. Uses LLM (OpenAI) to generate a grounded answer
+    3. Returns answer with specific citations (document, page, chunk, quote)
+    
+    **Key Features:**
+    - Answers ONLY based on provided context
+    - Returns "Brak informacji w dokumentach" if context insufficient
+    - Each fact in the answer is backed by a citation
+    - Citations include: document_id, page_number, chunk_id, and quote
+    
+    **Requirements:**
+    - Database connection must be configured
+    - Embedding system must be available
+    - OPENAI_API_KEY recommended for best results (falls back to simple extraction)
+    
+    **Example Request:**
+    ```json
+    {
+        "question": "Jakie są główne funkcje systemu?",
+        "top_k": 5
+    }
+    ```
+    
+    **Returns:**
+    - `answer`: The generated answer (or "Brak informacji w dokumentach")
+    - `citations`: List of citations with document references
+    - `has_sufficient_context`: Whether enough context was available
+    
+    **Errors:**
+    - 501: Database or embedding system not configured
+    - 500: Answer generation failed
+    """
+    if not USE_DATABASE:
+        raise HTTPException(status_code=501, detail="Answer endpoint requires database connection")
+    
+    if not EMBEDDING_TYPE:
+        raise HTTPException(status_code=501, detail="Answer endpoint requires embedding system")
+    
+    db = SessionLocal()
+    try:
+        # 1. Generate embedding for query
+        if EMBEDDING_TYPE == "openai":
+            query_embedding = get_embedding(query.question, api_key=OPENAI_API_KEY)
+        else:  # local
+            query_embedding = get_embedding(query.question)
+        
+        # Convert to list if numpy array
+        if hasattr(query_embedding, 'tolist'):
+            query_embedding = query_embedding.tolist()
+        
+        # 2. Search for similar chunks
+        sql = text("""
+            SELECT 
+                c.id,
+                c.text,
+                c.page_number,
+                c.chunk_metadata,
+                d.title,
+                d.id as document_id,
+                e.embedding <=> CAST(:embedding AS vector) AS distance
+            FROM chunks c
+            JOIN embeddings e ON c.id = e.chunk_id
+            JOIN documents d ON c.document_id = d.id
+            ORDER BY distance ASC
+            LIMIT :top_k
+        """)
+        
+        results = db.execute(
+            sql,
+            {"embedding": query_embedding, "top_k": query.top_k}
+        ).fetchall()
+        
+        # 3. Prepare chunks for answer generation
+        chunks = [
+            {
+                "chunk_id": r[0],
+                "text": r[1],
+                "page_number": r[2],
+                "metadata": r[3],
+                "document": r[4],
+                "document_id": str(r[5]),
+                "similarity_score": 1 - float(r[6])
+            }
+            for r in results
+        ]
+        
+        # 4. Generate answer with citations
+        use_openai = OPENAI_API_KEY is not None
+        answer = generate_answer(query.question, chunks, use_openai=use_openai)
+        
+        return answer
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Answer generation failed: {str(e)}")
     finally:
         db.close()

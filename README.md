@@ -1,6 +1,6 @@
-# RAG MVP - Secure Document Search System
+# RAG MVP - Secure Document Search System with Citations
 
-RAG (Retrieval Augmented Generation) MVP with FastAPI, PostgreSQL, pgvector, and local embeddings.
+RAG (Retrieval Augmented Generation) MVP with FastAPI, PostgreSQL, pgvector, local embeddings, and citation support.
 
 ## Features
 
@@ -9,8 +9,10 @@ RAG (Retrieval Augmented Generation) MVP with FastAPI, PostgreSQL, pgvector, and
 ✅ **Chunking** - Split documents into searchable chunks (1000 chars, 150 overlap)  
 ✅ **Vector Embeddings** - Generate embeddings using sentence-transformers (local, no API costs!)  
 ✅ **Semantic Search** - Find relevant chunks using pgvector cosine similarity  
+✅ **Answer with Citations** - LLM-generated answers with source citations (document, page, chunk, quote)  
 ✅ **PostgreSQL + pgvector** - Persistent vector database with 384-dimensional vectors  
 ✅ **Alembic Migrations** - Professional database schema management  
+✅ **Manual Evaluation System** - 30-question test suite with 3-metric scoring (0-180 points)  
 
 ## Quick Start
 
@@ -147,6 +149,33 @@ Response:
 }
 ```
 
+### Answer with Citations (NEW!)
+```bash
+curl -X POST http://localhost:8000/answer \
+  -H "Content-Type: application/json" \
+  -d '{
+    "question": "Jaki jest cel projektu?",
+    "top_k": 5
+  }'
+```
+
+Response:
+```json
+{
+  "answer": "Cel projektu to stworzenie systemu RAG (Retrieval-Augmented Generation) z obsługą cytowań, który umożliwia semantyczne wyszukiwanie w dokumentach oraz generowanie odpowiedzi opartych wyłącznie na dostarczonym kontekście.",
+  "citations": [
+    {
+      "document_id": "uuid",
+      "document_title": "README.md",
+      "page_number": 1,
+      "chunk_id": 5,
+      "quote": "RAG MVP with FastAPI, PostgreSQL, pgvector, and local embeddings..."
+    }
+  ],
+  "has_sufficient_context": true
+}
+```
+
 ## Interactive API Documentation
 
 Open in browser: **http://localhost:8000/docs**
@@ -219,6 +248,29 @@ secure-rag-mvp/
 │   ├── models.py            # SQLAlchemy models (Vector(384))
 │   ├── text_extraction.py   # PDF extraction (pdfplumber)
 │   ├── chunker.py           # Text chunking (1000/150)
+│   ├── embedding_local.py   # Local embeddings (sentence-transformers)
+│   ├── embedding.py         # OpenAI embeddings (fallback)
+│   ├── answer.py            # Answer generation with citations (NEW!)
+│   └── retrieve.py          # Vector search utilities
+├── eval/                    # Evaluation system (NEW!)
+│   ├── questions.jsonl      # 30 test questions
+│   ├── scoring.py           # Scoring system (0-6 per question)
+│   ├── run_evaluation.py    # Run all queries
+│   ├── analyze_results.py   # Analyze results
+│   └── README.md            # Evaluation documentation
+├── migrations/              # Alembic migrations
+│   ├── versions/            # Migration scripts
+│   └── env.py
+├── tests/                   # Unit tests
+│   ├── test_api.py
+│   ├── test_health.py
+│   ├── questions.py
+│   └── scoring.py
+├── docker-compose.yml       # PostgreSQL + pgvector container
+├── pyproject.toml           # Poetry dependencies
+├── setup.sh                 # Automated setup script
+└── README.md                # This file
+```
 │   ├── embedding_local.py   # sentence-transformers embeddings
 │   ├── embedding.py         # OpenAI embeddings (backup)
 │   └── retrieve.py          # Search logic (not used, inline in main)
@@ -424,6 +476,66 @@ curl -X POST http://localhost:8000/query \
 - **Query**: ~0.05 seconds (vector search)
 
 **Total processing time**: ~2 seconds for 3-page PDF with 5 chunks
+
+## Evaluation System 🎯
+
+The project includes a comprehensive manual evaluation system for assessing answer quality with citations.
+
+### Quick Start
+
+```bash
+# 1. Run evaluation (queries all 30 questions)
+python eval/run_evaluation.py
+
+# 2. Manually score results (edit eval/evaluation_results.json)
+# Add correctness (0-2), citation_quality (0-2), completeness (0-2)
+
+# 3. Analyze results
+python eval/analyze_results.py
+```
+
+### Scoring System
+
+Each question is scored in 3 categories (0-2 points each):
+
+1. **Correctness** (0-2): Is the answer accurate?
+   - 0 = Incorrect/hallucination
+   - 1 = Partially correct
+   - 2 = Correct
+
+2. **Grounding/Citations** (0-2): Are citations accurate and relevant?
+   - 0 = No citations or irrelevant
+   - 1 = Weak citations
+   - 2 = Strong, supporting citations
+
+3. **Completeness** (0-2): Does it cover all key points?
+   - 0 = Missing key elements
+   - 1 = Mostly complete
+   - 2 = Fully complete
+
+**Maximum Score**: 
+- Per question: 6 points
+- Total (30 questions): 180 points
+
+### Example Output
+
+```
+==============================================================
+EVALUATION SUMMARY
+==============================================================
+Total Questions: 30
+Completed Evaluations: 30
+Total Score: 156 / 180
+Percentage: 86.67%
+
+AVERAGE SCORES (out of 2):
+  Correctness:      1.80
+  Citation Quality: 1.73
+  Completeness:     1.67
+==============================================================
+```
+
+**See [eval/README.md](eval/README.md) for detailed documentation.**
 
 ## Stop Services
 ```bash
